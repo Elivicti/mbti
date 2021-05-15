@@ -6,7 +6,7 @@ var btnNxt;
 var txtQuesIndex;
 var txtQuestions;
 		
-var data; 			//json data
+var json; 			//json data
 var quesArr;		//
 var currIndex;		//
 
@@ -51,6 +51,33 @@ function randIntArray(length)
 	return arr;
 } 
 
+window.onload = function()
+{
+	console.log("loading");
+	btnYes = document.getElementById("btnYes");
+	btnNo = document.getElementById("btnNo");
+	btnPrv = document.getElementById("btnPrv");
+	btnNxt = document.getElementById("btnNxt");
+		
+	var url = "data/data.json"  //json文件url，本地的就写本地的位置，如果是服务器的就写服务器的路径
+	var request = new XMLHttpRequest();
+	//request.overrideMimeType("application/json");
+	request.open("get", url);   //设置请求方法与路径
+	request.send(null);         //不发送数据到服务器
+	request.onload = function () {  //XHR对象获取到返回信息后执行
+		if (request.status == 200) //返回状态为200，即为数据获取成功
+		{
+			json = JSON.parse(request.responseText);
+			console.log(json);
+			loadInitPage();
+			//init();
+			console.log(json);
+		}
+		
+	}
+	
+}
+
 function init()
 {
 	quesArr = new Array;
@@ -69,37 +96,12 @@ function init()
 
 function loadInitPage()
 {
-	txtQuestions.innerHTML = data.Description;
-	txtQuesIndex = "0/" + data.Questions.length;
+	txtQuestions.innerHTML = json.Description;
+	txtQuesIndex = "0/" + json.Questions.length;
 	
 	btnYes.disabled = true;
 	btnNo.disabled = true;
 	btnPrv.disabled = true;
-}
-
-window.onload = function()
-{
-	console.log("loading");
-	btnYes = document.getElementById("btnYes");
-	btnNo = document.getElementById("btnNo");
-	btnPrv = document.getElementById("btnPrv");
-	btnNxt = document.getElementById("btnNxt");
-		
-	var url = "data/data.json"  //json文件url，本地的就写本地的位置，如果是服务器的就写服务器的路径
-	var request = new XMLHttpRequest();
-	request.overrideMimeType("application/json");
-	request.open("get", url);   //设置请求方法与路径
-	request.send(null);         //不发送数据到服务器
-	request.onload = function () {  //XHR对象获取到返回信息后执行
-		console.log(request.status);
-		if (request.status == 200) //返回状态为200，即为数据获取成功
-		{
-			data = JSON.parse(request.responseText);
-        	console.log(data);
-		}
-	}
-	loadInitPage();
-	init();
 }
 
 function allFinished()
