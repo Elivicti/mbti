@@ -6,9 +6,21 @@ var btnNxt;
 var txtQuesIndex;
 var txtQuestions;
 		
-var json; 			//json data
+var data; 			//json data
 var quesArr;		//
 var currIndex;		//
+
+var request = new XMLHttpRequest();
+request.open("get", "data/data.json");
+request.send(null);
+request.onload = function () {
+	if (request.status == 200)
+	{
+		data = JSON.parse(request.responseText);
+		console.log(data);
+
+	}
+}
 
 /* **题目计分方法**
 定义题目数组，如下：
@@ -58,24 +70,13 @@ window.onload = function()
 	btnNo = document.getElementById("btnNo");
 	btnPrv = document.getElementById("btnPrv");
 	btnNxt = document.getElementById("btnNxt");
-		
-	var url = "data/data.json"  //json文件url，本地的就写本地的位置，如果是服务器的就写服务器的路径
-	var request = new XMLHttpRequest();
-	//request.overrideMimeType("application/json");
-	request.open("get", url);   //设置请求方法与路径
-	request.send(null);         //不发送数据到服务器
-	request.onload = function () {  //XHR对象获取到返回信息后执行
-		if (request.status == 200) //返回状态为200，即为数据获取成功
-		{
-			json = JSON.parse(request.responseText);
-			console.log(json);
-			loadInitPage();
-			//init();
-			console.log(json);
-		}
-		
-	}
 	
+	txtQuesIndex = document.getElementById("txtQuesIndex");
+	txtQuestions = document.getElementById("txtQuestions");
+
+	console.log(data);
+	loadInitPage();
+	init();
 }
 
 function init()
@@ -96,12 +97,15 @@ function init()
 
 function loadInitPage()
 {
-	txtQuestions.innerHTML = json.Description;
-	txtQuesIndex = "0/" + json.Questions.length;
+	console.log(data.Description.Begin);
+	txtQuestions.innerHTML = data.Description.Begin;
+	txtQuesIndex.innerHTML = "0/" + data.Questions.length;
 	
 	btnYes.disabled = true;
 	btnNo.disabled = true;
 	btnPrv.disabled = true;
+
+	document.getElementById("divResult").style.visibility = "hidden";
 }
 
 function allFinished()
@@ -114,35 +118,57 @@ function allFinished()
 	for (var i = 0; i < quesArr.length; i++) {
 		score[quesArr[i].type] += quesArr[i].result;
 	}
+	console.log(score);
+	txtQuestions.innerHTML = data.Description.Finish;
+	document.getElementById("divResult").style.visibility = "visible";
 }
 
 function onClickYes()
 {
 	quesArr[currIndex].result = (true == data.Questions[quesArr[currIndex].index][1] ? 1 : 0);
-	
+	btnNxt.disabled = false;
+	console.log("quesArr["+ currIndex + "].result = " + quesArr[currIndex].result);
 }
 
 function onClickNo()
 {
 	quesArr[currIndex].result = (false == data.Questions[quesArr[currIndex].index][1] ? 1 : 0);
+	btnNxt.disabled = false;
+	console.log("quesArr["+ currIndex + "].result = " + quesArr[currIndex].result);
 }
 
 function onClickNext()
 {
 	currIndex++;
-	if (currIndex > quesArr.length) {
+
+	if (currIndex + 1 > quesArr.length) {
+		//题目全答完以后触发结算
 		allFinished();
 		return;
 	}
-	txtQuesIndex.innerHTML = currIndex + "/" + quesArr.length;
+
+	btnNo.disabled = (currIndex < 0);
+	btnYes.disabled = (currIndex < 0);
+	btnPrv.disabled = (currIndex <= 0);
+
+	//修改题号和描述
+	txtQuesIndex.innerHTML = (currIndex + 1) + "/" + quesArr.length;
 	txtQuestions.innerHTML = data.Questions[quesArr[currIndex].index][0];
-	btnNxt.disabled = (quesArr[currIndex].result == -1 || currIndex > quesArr.length)
+
+	//当前题目未回答则禁用下一题按钮
+	btnNxt.disabled = (quesArr[currIndex].result == -1 || currIndex > quesArr.length);
 }
 
 function onClickPrev()
 {
 	currIndex--;
+
+	//修改题号和描述
 	txtQuesIndex.innerHTML = (currIndex + 1) + "/" + quesArr.length;
 	txtQuestions.innerHTML = data.Questions[quesArr[currIndex].index][0];
+
+	//重新启用下一题按钮
+	btnNxt.disabled = false;
+	//如果当前是第一题，禁用上一题按钮
 	btnPrv.disabled = (currIndex == 0);
 }
