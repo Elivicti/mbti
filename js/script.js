@@ -5,7 +5,10 @@ var btnNxt;
 
 var txtQuesIndex;
 var txtQuestions;
-		
+
+var resultLabels;
+var resultBars;
+
 var data; 			//json data
 var quesArr;		//
 var currIndex;		//
@@ -15,11 +18,7 @@ request.open("get", "data/data.json");
 request.send(null);
 request.onload = function () {
 	if (request.status == 200)
-	{
 		data = JSON.parse(request.responseText);
-		console.log(data);
-
-	}
 }
 
 /* **题目计分方法**
@@ -65,7 +64,6 @@ function randIntArray(length)
 
 window.onload = function()
 {
-	console.log("loading");
 	btnYes = document.getElementById("btnYes");
 	btnNo = document.getElementById("btnNo");
 	btnPrv = document.getElementById("btnPrv");
@@ -74,7 +72,9 @@ window.onload = function()
 	txtQuesIndex = document.getElementById("txtQuesIndex");
 	txtQuestions = document.getElementById("txtQuestions");
 
-	console.log(data);
+	resultLabels = document.getElementsByClassName("resultLabel");
+	resultBars = document.getElementsByClassName("resultBar");
+
 	loadInitPage();
 	init();
 }
@@ -97,7 +97,6 @@ function init()
 
 function loadInitPage()
 {
-	console.log(data.Description.Begin);
 	txtQuestions.innerHTML = data.Description.Begin;
 	txtQuesIndex.innerHTML = "0/" + data.Questions.length;
 	
@@ -105,7 +104,12 @@ function loadInitPage()
 	btnNo.disabled = true;
 	btnPrv.disabled = true;
 
-	document.getElementById("divResult").style.visibility = "hidden";
+	for (var i = 0; i < data.Types.length; i++)
+	{
+		resultLabels[i].innerHTML = data.Types[i][0];
+	}
+
+	//document.getElementById("divResult").style.visibility = "hidden";
 }
 
 function allFinished()
@@ -114,11 +118,18 @@ function allFinished()
 	btnNxt.disabled = true;
 	btnYes.disabled = true;
 	btnNo.disabled  = true;
+
 	var score = [ 0, 0, 0, 0, 0, 0 ];
 	for (var i = 0; i < quesArr.length; i++) {
 		score[quesArr[i].type] += quesArr[i].result;
 	}
 	console.log(score);
+
+	for (var i = 0; i < data.Types.length; i++)
+	{
+		resultLabels[i].innerHTML = data.Types[i][0];
+	}
+
 	txtQuestions.innerHTML = data.Description.Finish;
 	document.getElementById("divResult").style.visibility = "visible";
 }
