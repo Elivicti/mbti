@@ -128,6 +128,7 @@ function allFinished()
 	for (var i = 0; i < data.Types.length; i++)
 	{
 		resultLabels[i].innerHTML = data.Types[i][0];
+		resultBars[i].innerHTML = score[i];
 	}
 
 	txtQuestions.innerHTML = data.Description.Finish;
