@@ -1,3 +1,3 @@
 # mbti测试
 
-testing
+**notice** this project is still working in progress
