@@ -39,12 +39,6 @@ quesArr[i] = [
 score[quesArr[i].type] += quesArr[i].result;
 */
 
-function debug()
-{
-	alert("debug");
-	//document.getElementById("txtQuesIndex").innerHTML = "0/0";
-}
-
 function randIntArray(length)
 {
 	/*
@@ -112,7 +106,7 @@ function loadInitPage()
 		resultLabels[i].innerHTML = data.Types[i][0];
 	}
 
-	//document.getElementById("divResult").style.visibility = "hidden";
+	document.getElementById("divResult").style.visibility = "hidden";
 }
 
 function allFinished()
