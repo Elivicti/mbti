@@ -9,10 +9,11 @@ var txtQuestions;
 var resultLabels;
 var resultBars;
 
-var data; 			//json data
+//var data; 			//json data
 var quesArr;		//
 var currIndex;		//
 
+/*
 var request = new XMLHttpRequest();
 request.open("get", "data/data.json");
 request.send(null);
@@ -20,7 +21,7 @@ request.onload = function () {
 	if (request.status == 200)
 		data = JSON.parse(request.responseText);
 }
-
+*/
 /* **题目计分方法**
 定义题目数组，如下：
 ques = {               //均为int
