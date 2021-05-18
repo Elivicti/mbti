@@ -84,17 +84,19 @@ p.txtBox {
 div.boxResults {
 	margin:50px auto;
 	padding-bottom: 50;
+    line-height:80px;
+    font-size:28px;
 }
 div.resultLabel {
 	text-align:center;
-	width:15%;
-	line-height: 40px;
+	width:25%;
 	border:0px solid;
 	border-radius:8px 0 0 8px;
 	float:left;
-	background-color:green;
+	background-color:skyblue;
 	position:relative;
 	z-index:2;
+    color:white;
 }
 div.resultBarBg
 {
@@ -102,16 +104,14 @@ div.resultBarBg
 	background-color: #ddd;
 	position:relative;
 	z-index:0;
-	float:left;
-	right:50;
+	left:25%;
 }
 div.resultBar {
 	text-align: right;
 	padding-right: 20px;
-	line-height: 40px;
 	color: white;
 	position:relative;
 	z-index:1;
 	width:80%;
-	background-color:#4CAF50;
+	background-color:lightblue;
 }
