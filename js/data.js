@@ -1,4 +1,4 @@
-{
+var data = {
 	"__Comments" : {
 		"QuestionsArrayFormat" : 
 			["str_question", "bool_add_score_when_yes_or_no", "int_type_index"],
@@ -83,4 +83,4 @@
 		["管理型", "", "", "", ""],
 		["传统型", "", "", "", ""]
 	]
-}
+};
