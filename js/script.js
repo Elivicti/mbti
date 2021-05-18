@@ -75,6 +75,8 @@ window.onload = function()
 	resultLabels = document.getElementsByClassName("resultLabel");
 	resultBars = document.getElementsByClassName("resultBar");
 
+        console.log(data);
+
 	loadInitPage();
 	init();
 }
