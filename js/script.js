@@ -9,19 +9,10 @@ var txtQuestions;
 var resultLabels;
 var resultBars;
 
-//var data; 			//json data
 var quesArr;		//
 var currIndex;		//
 
-/*
-var request = new XMLHttpRequest();
-request.open("get", "data/data.json");
-request.send(null);
-request.onload = function () {
-	if (request.status == 200)
-		data = JSON.parse(request.responseText);
-}
-*/
+
 /* **题目计分方法**
 定义题目数组，如下：
 ques = {               //均为int
@@ -38,6 +29,10 @@ quesArr[i] = [
 最后，创建一个Array对象score[6]，分别计分
 score[quesArr[i].type] += quesArr[i].result;
 */
+
+function debug()
+{
+}
 
 function randIntArray(length)
 {
@@ -70,10 +65,28 @@ window.onload = function()
 	resultLabels = document.getElementsByClassName("resultLabel");
 	resultBars = document.getElementsByClassName("resultBar");
 
-        console.log(data);
+	//alert(resultBars[0].style.width);
 
 	loadInitPage();
 	init();
+	
+	var resultTypes = [
+		document.getElementsByClassName("typeLabel"),
+		document.getElementsByClassName("common"),
+		document.getElementsByClassName("chara"),
+		document.getElementsByClassName("job"),
+		document.getElementsByClassName("major")
+	];
+	for (var i = 0; i < resultTypes.length; i++)
+	{
+		for (var j = 0; j < 6; j++)
+		{
+			var value = "";
+			if (i > 0)
+				value += "<b>" + data.TypeLabels[i] + "：</b>"
+			resultTypes[i][j].innerHTML = value + data.Types[j][i];
+		}
+	}
 }
 
 function init()
@@ -105,8 +118,6 @@ function loadInitPage()
 	{
 		resultLabels[i].innerHTML = data.Types[i][0];
 	}
-
-	document.getElementById("divResult").style.visibility = "hidden";
 }
 
 function allFinished()
@@ -126,10 +137,13 @@ function allFinished()
 	{
 		resultLabels[i].innerHTML = data.Types[i][0];
 		resultBars[i].innerHTML = score[i];
+		//alert(((score[i] / 10) * 100) + "%");
+		resultBars[i].style.width = ((score[i] / 10) * 100) + "%";
 	}
 
 	txtQuestions.innerHTML = data.Description.Finish;
 	document.getElementById("divResult").style.visibility = "visible";
+	
 }
 
 function onClickYes()
