@@ -1,3 +1,4 @@
-# mbti测试
+# mbti未来职业倾向测试
 
-***NOTICE:** this project is still working in progress
+*** 本测试题摘录自必刷卷5月临考卷附赠mbti测试题**
+*** 仅供学习交流**
