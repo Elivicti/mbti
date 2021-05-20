@@ -29,11 +29,6 @@ quesArr[i] = [
 最后，创建一个Array对象score[6]，分别计分
 score[quesArr[i].type] += quesArr[i].result;
 */
-
-function debug()
-{
-}
-
 function randIntArray(length)
 {
 	/*
@@ -54,6 +49,9 @@ function randIntArray(length)
 
 window.onload = function()
 {
+	if(!/mobile/i.test(navigator.userAgent))
+		alert("建议使用移动端访问页面！");
+
 	btnYes = document.getElementById("btnYes");
 	btnNo = document.getElementById("btnNo");
 	btnPrv = document.getElementById("btnPrv");
